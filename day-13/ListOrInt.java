@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOrInt {
+public class ListOrInt implements Comparable<ListOrInt> {
 
     // Integer or List
     boolean isInt;
@@ -26,7 +26,6 @@ public class ListOrInt {
         // ','
         // 0-10
 
-        int startListIndex = -1, endListIndex = 0;
         int interiorLists = 0;
         boolean listStarted = false;
         boolean skipInterior = false;
@@ -38,7 +37,6 @@ public class ListOrInt {
             } else if(c == ',') { // skip
                 continue;
             } else if(c == '[' && !listStarted) { // Start list
-                startListIndex = 0;
                 listStarted = true;
             } else if(c == '[' && listStarted && !skipInterior && !listElement) {
                 // new interior list
@@ -111,6 +109,16 @@ public class ListOrInt {
         // Need to check which list ended first, then return true/false
         // return negative value if left packet is shorter than right
         return this.list.size() == packet2.list.size() ? 0 : this.list.size() - packet2.list.size();
+    }
+
+    @Override
+    public int compareTo(ListOrInt o) {
+        return this.checkOrder(o);
+    }
+
+    @Override
+    public String toString() {
+        return isInt ? String.valueOf(val) : list.toString();
     }
 
 }
